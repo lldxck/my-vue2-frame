@@ -16,8 +16,8 @@ export const isEmail = (val) => {
 
 /**
  * 判断是否是电话号码
- * @param {*} val 
- * @returns 
+ * @param {*} val
+ * @returns
  */
 export const isPhone = (val) => {
   const regexp =
@@ -28,4 +28,79 @@ export const isPhone = (val) => {
   return true;
 };
 
+/**
+ * @description 去除字符串所有空格
+ * @param {*} val 字符串
+ * @returns
+ */
+export const delAllSpace = (val) => {
+  return val.replace(/\s*/g, "");
+};
 
+/**
+ * @description 去除字符串两端空格
+ * @param {*} val 字符串
+ * @returns
+ */
+export const delBothEndsSpace = (val) => {
+  return val.replace(/^\s*|\s*$/g, "");
+};
+
+/**
+ * @description 去除字符串左侧的空格
+ * @param {*} val 字符串
+ * @returns
+ */
+export const delLeftSpace = (val) => {
+  return val.replace(/^\s*/, "");
+};
+
+/**
+ * @description 去除字符串右侧的空格
+ * @param {*} val
+ * @returns
+ */
+export const delRightSpace = (val) => {
+  return val.replace(/(\s*$)/g, "");
+};
+
+/**
+ * @description 判断是否是身份证号（支持一代15位和二代18位）
+ * @param {*} val
+ * @returns
+ */
+export const isIdCard = (val) => {
+  const regexp =
+    /(^\d{8}(0\d|10|11|12)([0-2]\d|30|31)\d{3}$)|(^\d{6}(18|19|20)\d{2}(0\d|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)$)/;
+  if (!regexp.test(value)) {
+    return false;
+  }
+  return true;
+};
+
+/**
+ * @description 判断是否是网址
+ * @param {*} val
+ * @returns
+ */
+export const isWebsite = (val) => {
+  const regexp =
+    /^((https?|ftp):\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/\w\.-]*)*\/?/;
+  if (!regexp.test(value)) {
+    return false;
+  }
+  return true;
+};
+
+/**
+ * @description 判断是否是QQ
+ * @param {*} val
+ * @returns
+ */
+export const isQq = (val) => {
+  const regexp = /^[1-9][0-9]{4,10}$/;
+  if (!regexp.test(value)) {
+    return false;
+  }
+  return true;
+};
