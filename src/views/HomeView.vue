@@ -14,7 +14,7 @@ export default {
   name: "HomeView",
   created() {
     console.log(process.env.NODE_ENV);
-    console.log(process.env.VUE_APP_BASE_URL);
+    console.log(process.env.VUE_APP_API_URL);
   },
   components: {
     HelloWorld,
