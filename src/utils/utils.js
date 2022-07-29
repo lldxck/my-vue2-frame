@@ -173,3 +173,31 @@ export const getGUID = () => {
     return v.toString(16);
   });
 };
+
+/**
+ * @description 获取地址栏参数
+ * @param {*} type
+ * @param {*} url
+ * @returns
+ */
+export const getUrlParams = (type, url = window.location.href) => {
+  // 方法一
+  // const res = {};
+  // if (url.includes("?")) {
+  //   const str = url.split("?")[1];
+  //   const arr = str.split("&");
+  //   arr.forEach((item) => {
+  //     const key = item.split("=")[0];
+  //     const val = item.split("=")[1];
+  //     res[key] = decodeURIComponent(val); // 解码
+  //   });
+  // }
+  // return res[type];
+  // 方法二
+  // 创建一个URLSearchParams实例
+  const str = url.split("?")[1];
+  const urlSearchParams = new URLSearchParams(str);
+  // 把键值对列表转换为一个对象
+  const params = Object.fromEntries(urlSearchParams.entries());
+  return params[type];
+};
