@@ -23,3 +23,27 @@ export const isAndroid = () => {
 export const isWX = () => {
   return u.toLowerCase().match(/MicroMessenger/i == "micromessenger");
 };
+
+/**
+ * @description 判断是否是PC
+ * @returns
+ */
+export const isPc = () => {
+  const Agents = [
+    "Android",
+    "iPhone",
+    "webOS",
+    "BlackBerry",
+    "SymbianOS",
+    "Windows Phone",
+    "iPad",
+    "iPod",
+  ];
+  for (const item of Agents) {
+    console.log(item);
+    if (u.indexOf(item) > 0) {
+      return false;
+    }
+  }
+  return true;
+};

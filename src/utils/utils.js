@@ -1,7 +1,4 @@
 // localStorage相关操作
-
-import { del } from "vue";
-
 /**
  * @description 获取localStorage
  * @param {*} key storage名称
