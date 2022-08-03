@@ -7,10 +7,13 @@
 
 <script>
 import { getMonthLastDay, getTimeDifference } from "@/utils/formatDate";
-import { getUrlParams } from "@/utils/utils";
-import { isPc } from "@/utils/platform";
+import { getUrlParams, getRandomHexColor } from "@/utils/utils";
+import { isPc, getBrowserType } from "@/utils/platform";
 export default {
   name: "HomeView",
+  data() {
+    return {};
+  },
   created() {
     console.log(process.env.NODE_ENV);
     console.log(process.env.VUE_APP_API_URL);
@@ -20,6 +23,8 @@ export default {
       getUrlParams("code", "http://192.168.29.110:5003/index?code=123&id=456")
     );
     console.log(isPc());
+    console.log(getRandomHexColor());
+    console.log(getBrowserType());
   },
 };
 </script>

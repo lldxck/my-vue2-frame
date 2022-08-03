@@ -198,3 +198,11 @@ export const getUrlParams = (type, url = window.location.href) => {
   const params = Object.fromEntries(urlSearchParams.entries());
   return params[type];
 };
+
+/**
+ * @description 生成随机颜色
+ * @returns
+ */
+export const getRandomHexColor = () => {
+  return `#${Math.floor(Math.random() * 0xffffff).toString(16)}`;
+};
