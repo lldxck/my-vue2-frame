@@ -1,4 +1,4 @@
-// 时间相关工具
+import { isDate } from "./typeVerification";
 /**
  * 按照指定格式来格式化时间
  * @param {*} date 时间
@@ -6,6 +6,9 @@
  * @returns
  */
 export const formatDate = (date, fmt = "yyyy-MM-dd hh:mm:ss") => {
+  if (isDate(date)) {
+    date = new Date(date);
+  }
   const o = {
     "M+": date.getMonth() + 1, // 月份
     "d+": date.getDate(), // 日
@@ -89,7 +92,104 @@ export const getTimeDifference = (dateBegin, dateEnd = new Date()) => {
   const dateDiff = Math.abs(endTime - beginTime);
   const days = Math.floor(dateDiff / 1000 / 60 / 60 / 24);
   const hours = Math.floor((dateDiff / 1000 / 60 / 60) % 24);
-  const minute = Math.floor((dateDiff / 1000 / 60) % 60);
+  const minutes = Math.floor((dateDiff / 1000 / 60) % 60);
   const seconds = Math.floor((dateDiff / 1000) % 60);
-  return `${days}天${hours}时${minute}分${seconds}秒`;
+  // return `${days}天${hours}时${minute}分${seconds}秒`;
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
+};
+
+/**
+ * @description 判断两个日期是否是同一天
+ * @param {*} date1
+ * @param {*} date2
+ * @returns
+ */
+export const isSameDay = (date1, date2) => {
+  // 判断是否是Date类型
+  if (!isDate(date1)) {
+    date1 = new Date(date1);
+  }
+  if (!isDate(date2)) {
+    date2 = new Date(date2);
+  }
+  const { getFullYear, getMonth, getDate } = Date.prototype;
+  return [getFullYear, getMonth, getDate].every((fn) => {
+    return fn.call(date1) === fn.call(date2);
+  });
+};
+
+/**
+ * @description 判断该日期是否是今天
+ * @param {*} date
+ */
+export const isToday = (date) => {
+  return new Date().toLocaleDateString() == new Date(date).toLocaleDateString();
+};
+
+/**
+ * @description 判断指定日期是周几
+ * @param {*} date 0-6 周日-周六
+ */
+export const isDayOfWeek = (date) => {
+  const week = new Date(date).getDay();
+  return week;
+};
+
+/**
+ * @description 判断是否是工作日
+ * @param {*} date
+ */
+export const isWorkDay = (date) => {
+  // 判断是否是节假日 return false
+  // 判断是否是补班日 return true
+  // 判断是否是周一到周五
+  if (isDayOfWeek(date) !== 6 && isDayOfWeek(date) !== 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+/**
+ * @description 获取两个日期之间的工作日天数（去除周末）
+ * @param {*} date1
+ * @param {*} date2
+ */
+export const getWorkDay = (date1, date2) => {
+  // 判断是否是Date类型
+  if (!isDate(date1)) {
+    date1 = new Date(date1);
+  }
+  if (!isDate(date2)) {
+    date2 = new Date(date2);
+  }
+  if (isSameDay(date1, date2)) {
+    // 同一天
+    return 0;
+  } else {
+    // 非同一天
+    // 获取两个日期的总相差天数
+    const base = 1000 * 60 * 60 * 24;
+    let days = 0;
+    if (date2.getTime() > 0 && date1.getTime()) {
+      while (date2.getTime() - date1.getTime() > 0) {
+        if (isWorkDay(date1)) {
+          days++;
+        }
+        date1 = new Date(date1.getTime() + base);
+      }
+      return days;
+    }
+  }
+};
+
+export const getWorkTime = (startTime, endTime) => {
+  if (startTime || endTime) {
+    return false;
+  }
 };

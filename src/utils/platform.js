@@ -66,8 +66,7 @@ export const getBrowserType = () => {
   // 判断是否是Firefox浏览器
   const isFirefox = u.indexOf("Firefox") > -1;
   // 判断是否是Safari浏览器
-  const isSafari =
-    u.indexOf("Safari") > -1 && u.indexOf("Chrome") == -1;
+  const isSafari = u.indexOf("Safari") > -1 && u.indexOf("Chrome") == -1;
   // 判断是否是Chrome浏览器
   const isChrome = u.indexOf("Chrome") > -1 && u.indexOf("Safari") > -1;
   if (isIE) {
