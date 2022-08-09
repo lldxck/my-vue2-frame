@@ -15,8 +15,13 @@ import {
   isWorkDay,
   getWorkDay,
   formatDate,
-} from "@/utils/formatDate";
-import { getUrlParams, getRandomHexColor } from "@/utils/utils";
+  getAppointDateTime,
+  isEqual,
+  dateCompare,
+  isBefore,
+  isAfter,
+} from "@/utils/date";
+import { getUrlParams, getRandomHexColor, zeroFilling } from "@/utils/utils";
 import { isPc, getBrowserType } from "@/utils/platform";
 export default {
   name: "HomeView",
@@ -38,8 +43,16 @@ export default {
     console.log(isToday("2022-08-01"));
     console.log(isDayOfWeek("2022-8-6"));
     console.log(isWorkDay("2022-8-4"));
-    console.log(getWorkDay("2022-7-23", "2022-8-5"));
+
     console.log(formatDate("2022-8-4"));
+    console.log(getAppointDateTime(new Date()));
+    console.log(zeroFilling(8));
+
+    console.log(isEqual("2022-8-7 00:00:00", "2022-8-7 00:04:00"));
+    console.log(dateCompare("2022-8-7 00:18:00", "2022-8-7 00:22:00"));
+    console.log(isBefore("2022-8-7 00:18:00", "2022-8-7 00:22:00"));
+    console.log(isAfter("2022-8-7 01:18:00", "2022-8-7 00:22:00"));
+    console.log(getWorkDay("2022-8-5 00:00:00", "2022-8-9 21:00:00"));
   },
 };
 </script>

@@ -1,4 +1,5 @@
 import { isDate } from "./typeVerification";
+import { zeroFilling } from "./utils";
 /**
  * 按照指定格式来格式化时间
  * @param {*} date 时间
@@ -6,7 +7,7 @@ import { isDate } from "./typeVerification";
  * @returns
  */
 export const formatDate = (date, fmt = "yyyy-MM-dd hh:mm:ss") => {
-  if (isDate(date)) {
+  if (!isDate(date)) {
     date = new Date(date);
   }
   const o = {
@@ -156,7 +157,73 @@ export const isWorkDay = (date) => {
 };
 
 /**
- * @description 获取两个日期之间的工作日天数（去除周末）
+ * @description 获取指定的日期和时间
+ * @param {*} date 日期
+ * @param {*} time 时间
+ * @returns
+ */
+export const getAppointDateTime = (date, time = "00:00:00") => {
+  const year = new Date(date).getFullYear();
+  const month = new Date(date).getMonth() + 1;
+  const day = new Date(date).getDate();
+  return `${year}-${zeroFilling(month)}-${zeroFilling(day)} ${time}`;
+};
+
+/**
+ * @description 判断两个日期是否相等
+ * @param {*} date1
+ * @param {*} date2
+ * @returns
+ */
+export const isEqual = (date1, date2) => {
+  return new Date(date1).getTime() === new Date(date2).getTime();
+};
+
+/**
+ * @description 比较第一个日期是否在第二个日期之前
+ * date在compareDate前 返回true
+ * @param {*} date
+ * @param {*} compareDate
+ * @returns
+ */
+export const isBefore = (date, compareDate) => {
+  return new Date(date).getTime() < new Date(compareDate).getTime();
+};
+
+/**
+ * @description 比较第一期日期是否在第二个日期之后
+ * date在compareDate后 返回true
+ * @param {*} date
+ * @param {*} compareDate
+ * @returns
+ */
+export const isAfter = (date, compareDate) => {
+  return new Date(date).getTime() > new Date(compareDate).getTime();
+};
+
+/**
+ * @description 比较两个日期的大小
+ * date1>date2 返回-1;
+ * date1<date2 返回1;
+ * date1=date2 返回0
+ * @param {*} date1
+ * @param {*} date2
+ * @returns
+ */
+export const dateCompare = (date1, date2) => {
+  date1 = new Date(date1).getTime();
+  date2 = new Date(date2).getTime();
+  if (date1 > date2) {
+    return -1;
+  } else if (date1 < date2) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
+
+/**
+ * @description 获取两个日期之间的相差天数,不足一天会算一天
  * @param {*} date1
  * @param {*} date2
  */
@@ -174,22 +241,14 @@ export const getWorkDay = (date1, date2) => {
   } else {
     // 非同一天
     // 获取两个日期的总相差天数
-    const base = 1000 * 60 * 60 * 24;
+    const onDay = 1000 * 60 * 60 * 24;
     let days = 0;
     if (date2.getTime() > 0 && date1.getTime()) {
       while (date2.getTime() - date1.getTime() > 0) {
-        if (isWorkDay(date1)) {
-          days++;
-        }
-        date1 = new Date(date1.getTime() + base);
+        days++;
+        date1 = new Date(date1.getTime() + onDay);
       }
       return days;
     }
-  }
-};
-
-export const getWorkTime = (startTime, endTime) => {
-  if (startTime || endTime) {
-    return false;
   }
 };

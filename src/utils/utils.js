@@ -206,3 +206,12 @@ export const getUrlParams = (type, url = window.location.href) => {
 export const getRandomHexColor = () => {
   return `#${Math.floor(Math.random() * 0xffffff).toString(16)}`;
 };
+
+/**
+ * @description 补0操作
+ * @param {*} v
+ * @returns
+ */
+export const zeroFilling = (v) => {
+  return v >> 0 < 10 ? "0" + v : v;
+};
