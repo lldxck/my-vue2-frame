@@ -252,3 +252,16 @@ export const getWorkDay = (date1, date2) => {
     }
   }
 };
+
+/**
+ * @description 根据传入天数和格式，获取近多少天时间
+ * @param {*} days 近多少天
+ * @param {*} fmt 时间格式
+ * @returns [开始时间，结束时间]
+ */
+export const getDaysTime = (days = 7, fmt = "yyyy-MM-dd hh:mm:ss") => {
+  const end = new Date();
+  const start = new Date();
+  start.setTime(start.getTime() - 3600 * 1000 * days);
+  return [formatDate(start, fmt), formatDate(end, fmt)];
+};

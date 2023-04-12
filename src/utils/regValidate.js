@@ -104,3 +104,31 @@ export const isQq = (val) => {
   }
   return true;
 };
+
+/**
+ * @description 只能输入正整数
+ * @param {*} value
+ * @returns
+ */
+export const inputOnlyNumber = (value) => {
+  return value.replace(/^(0+)|[^\d]+/g, "");
+};
+
+/**
+ * @description 只能那个书正整数和小数(最多两位小数)
+ * @param {*} value
+ * @returns
+ */
+export const inputOnlyNumberAndDecimal = (value) => {
+  let newValue = value;
+  if (newValue != "" && newValue.indexOf(".") < 0) {
+    newValue = parseFloat(newValue);
+  }
+  newValue = newValue
+    .toString()
+    .replace(/[^\d.]/g, "")
+    .replace(/^\./g, "")
+    .replace(/\.{2,}/g, ".")
+    .replace(/^(\-)*(\d+)\.(\d\d).*$/, "$1$2.$3");
+  return newValue;
+};
